@@ -30,6 +30,14 @@ draft: false
 - 寄存器、共享内存与线程上限如何共同限制 occupancy；
 - 为什么高 occupancy 不保证高性能，以及 SIMD、SIMT 和 warp divergence 的关系。
 
+### [[计算机科学/知识整理/nvidia-gemm-ping-pong|数学博士眼中的 NVIDIA GEMM 中的 ping-pong 流水]]
+
+微信公众号外部来源全文归档，保留原文的公式、代码、图注和 7 张正文图片，聚焦：
+
+- shared memory 双缓冲与多级 software pipeline 如何隐藏操作数搬运延迟；
+- Hopper 的 TMA、WGMMA、warp specialization 与 two-consumer ping-pong 如何错峰隐藏 epilogue；
+- cooperative 与 ping-pong 的资源权衡，以及 Blackwell 的 TMEM、tcgen05 和 CLC 调度迁移。
+
 ## 内容组织
 
 - **基础理论**：优化、泛化、表示学习、在线学习；
