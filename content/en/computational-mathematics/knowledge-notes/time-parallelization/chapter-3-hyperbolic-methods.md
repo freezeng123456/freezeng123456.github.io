@@ -167,19 +167,20 @@ $$
 \qquad \boldsymbol v_n(T_{n-1})=0. \tag{3.13}
 $$
 
-Then propagate every endpoint contribution through a homogeneous tail:
+Then propagate every interface contribution through a homogeneous tail:
 
 $$
 \boldsymbol w_n'(t)=A\boldsymbol w_n(t),
-\qquad \boldsymbol w_n(T_n)=\boldsymbol v_n(T_n). \tag{3.14}
+\quad t\in(T_{n-1},T],
+\qquad \boldsymbol w_n(T_{n-1})=\boldsymbol v_{n-1}(T_{n-1}), \tag{3.14}
 $$
 
-Linearity gives the exact reconstruction
+with $\boldsymbol v_0(T_0)=\boldsymbol u_0$. Linearity gives the exact reconstruction
 
 $$
-\boldsymbol u(t)=\boldsymbol v_j(t)+
-\sum_{n=0}^{j-1}\boldsymbol w_n(t),
-\qquad t\in[T_{j-1},T_j]. \tag{3.15}
+\boldsymbol u(t)=\boldsymbol v_n(t)+
+\sum_{j=1}^{n}\boldsymbol w_j(t),
+\qquad t\in[T_{n-1},T_n]. \tag{3.15}
 $$
 
 ![ParaExp separates local forced responses from global homogeneous propagation](assets/diagrams/pint/en/paraexp-decomposition.svg)
@@ -187,7 +188,7 @@ $$
 The central operation is
 
 $$
-\boldsymbol w_n(t)=e^{(t-T_n)A}\boldsymbol v_n(T_n).
+\boldsymbol w_n(t)=e^{(t-T_{n-1})A}\boldsymbol v_{n-1}(T_{n-1}).
 $$
 
 An exponential action can jump directly to any later time. Its cost is controlled by the matrix, tolerance, and approximation method and need not grow linearly with the number of intermediate time steps. Rational Krylov or polynomial/Chebyshev methods are common for large sparse systems. Scaling-and-squaring with Padé approximation is appropriate for smaller dense matrices. A cited wave-equation study reported parallel efficiency up to roughly 80%; the value is specific to its exponential implementation, partition, and machine.

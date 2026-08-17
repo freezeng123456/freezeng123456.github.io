@@ -172,19 +172,20 @@ $$
 \qquad \boldsymbol v_n(T_{n-1})=0. \tag{3.13}
 $$
 
-第二步把每段末端贡献通过齐次方程向后续时间传播：
+第二步把每个界面上的贡献通过齐次方程向后续时间传播：
 
 $$
 \boldsymbol w_n'(t)=A\boldsymbol w_n(t),
-\qquad \boldsymbol w_n(T_n)=\boldsymbol v_n(T_n). \tag{3.14}
+\quad t\in(T_{n-1},T],
+\qquad \boldsymbol w_n(T_{n-1})=\boldsymbol v_{n-1}(T_{n-1}), \tag{3.14}
 $$
 
-线性叠加给出精确重构
+其中 $\boldsymbol v_0(T_0)=\boldsymbol u_0$。线性叠加给出精确重构
 
 $$
-\boldsymbol u(t)=\boldsymbol v_j(t)+
-\sum_{n=0}^{j-1}\boldsymbol w_n(t),
-\qquad t\in[T_{j-1},T_j]. \tag{3.15}
+\boldsymbol u(t)=\boldsymbol v_n(t)+
+\sum_{j=1}^{n}\boldsymbol w_j(t),
+\qquad t\in[T_{n-1},T_n]. \tag{3.15}
 $$
 
 ![ParaExp 将局部受迫响应与全局齐次传播分开](assets/diagrams/pint/zh/paraexp-decomposition.svg)
@@ -192,7 +193,7 @@ $$
 关键点在齐次尾部：
 
 $$
-\boldsymbol w_n(t)=e^{(t-T_n)A}\boldsymbol v_n(T_n).
+\boldsymbol w_n(t)=e^{(t-T_{n-1})A}\boldsymbol v_{n-1}(T_{n-1}).
 $$
 
 矩阵指数作用可以直接跳到任意后续时刻，成本取决于矩阵与目标精度，
