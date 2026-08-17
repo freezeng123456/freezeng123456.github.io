@@ -279,7 +279,29 @@ $$
 =((1-\alpha)\boldsymbol u_n^\top,0,\ldots,0)^\top.
 $$
 
-The paper defines $\boldsymbol V$ and $\boldsymbol b(\boldsymbol u_n)$ in an unnumbered inline display; the tag (4.24) belongs to the following group, which defines $C_\alpha$ and $F(\boldsymbol V)$. The first block of $F$ contains $\theta f(\boldsymbol v_1)$ and $(1-\theta)f(\alpha\boldsymbol v_J+(1-\alpha)\boldsymbol u_n)$; later blocks are $\theta f(\boldsymbol v_j)+(1-\theta)f(\boldsymbol v_{j-1})$. The quasi-Newton update is
+The paper defines $\boldsymbol V$ and $\boldsymbol b(\boldsymbol u_n)$ in an unnumbered inline display; the tag (4.24) belongs to the following group, which defines $C_\alpha$ and $F(\boldsymbol V)$:
+
+$$
+C_\alpha=
+\begin{bmatrix}
+1&&&-\alpha\\
+-1&1\\
+&\ddots&\ddots\\
+&&-1&1
+\end{bmatrix},
+\qquad
+F(\boldsymbol V)=
+\begin{bmatrix}
+\theta f(\boldsymbol v_1)+(1-\theta)f(\alpha\boldsymbol v_J+(1-\alpha)\boldsymbol u_n)\\
+\theta f(\boldsymbol v_2)+(1-\theta)f(\boldsymbol v_1)\\
+\vdots\\
+\theta f(\boldsymbol v_J)+(1-\theta)f(\boldsymbol v_{J-1})
+\end{bmatrix}. \tag{4.24}
+$$
+
+The $-\alpha$ entry in the corner of $C_\alpha$ is exactly the head–tail condition (4.22): replacing it by $0$ makes $C_\alpha$ strictly lower triangular and turns the all-at-once system back into sequential fine propagation. The first block of $F$ differs in shape from the others for the same reason, since $\boldsymbol v_0$ has been replaced by $\alpha\boldsymbol v_J+(1-\alpha)\boldsymbol u_n$. Note that the weights $\theta$ and $1-\theta$ are already built into $F$, which matters for the Jacobian derived below.
+
+The quasi-Newton update is
 
 $$
 P_\alpha(\boldsymbol V^l)\Delta\boldsymbol V^l

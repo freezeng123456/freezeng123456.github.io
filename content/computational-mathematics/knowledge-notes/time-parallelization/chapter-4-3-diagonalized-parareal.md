@@ -288,7 +288,27 @@ $$
 =((1-\alpha)\boldsymbol u_n^\top,0,\ldots,0)^\top.
 $$
 
-原文把 $\boldsymbol V$ 与 $\boldsymbol b(\boldsymbol u_n)$ 放在一段未编号的行内公式中，编号 (4.24) 属于随后定义 $C_\alpha$ 与 $F(\boldsymbol V)$ 的那组公式。$F$ 的首块同时含 $\theta f(\boldsymbol v_1)$ 和 $(1-\theta)f(\alpha\boldsymbol v_J+(1-\alpha)\boldsymbol u_n)$；其余块为 $\theta f(\boldsymbol v_j)+(1-\theta)f(\boldsymbol v_{j-1})$。
+原文把 $\boldsymbol V$ 与 $\boldsymbol b(\boldsymbol u_n)$ 放在一段未编号的行内公式中，编号 (4.24) 属于随后定义 $C_\alpha$ 与 $F(\boldsymbol V)$ 的那组公式：
+
+$$
+C_\alpha=
+\begin{bmatrix}
+1&&&-\alpha\\
+-1&1\\
+&\ddots&\ddots\\
+&&-1&1
+\end{bmatrix},
+\qquad
+F(\boldsymbol V)=
+\begin{bmatrix}
+\theta f(\boldsymbol v_1)+(1-\theta)f(\alpha\boldsymbol v_J+(1-\alpha)\boldsymbol u_n)\\
+\theta f(\boldsymbol v_2)+(1-\theta)f(\boldsymbol v_1)\\
+\vdots\\
+\theta f(\boldsymbol v_J)+(1-\theta)f(\boldsymbol v_{J-1})
+\end{bmatrix}. \tag{4.24}
+$$
+
+$C_\alpha$ 的右上角 $-\alpha$ 就是 (4.22) 的首尾耦合条件：若把它换成 $0$，$C_\alpha$ 退回严格下三角，全时间系统重新变成顺序细传播。$F$ 的首块之所以与其余块形状不同，也是同一原因——$\boldsymbol v_0$ 已被 $\alpha\boldsymbol v_J+(1-\alpha)\boldsymbol u_n$ 替换。注意 $\theta$ 与 $1-\theta$ 的权重已经写进 $F$ 内部，这一点在下面推导 Jacobian 时是关键。
 
 准 Newton 更新为
 
