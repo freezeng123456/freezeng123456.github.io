@@ -181,11 +181,21 @@ Figures 4.16–4.17 apply the method to Burgers. The factor is approximately lin
 
 ### All-at-once system and block Jacobi smoothing
 
-For $\boldsymbol u'=A\boldsymbol u+\boldsymbol g$, the $\theta$ method gives
+For $\boldsymbol u'=A\boldsymbol u+\boldsymbol g$, a general one-step integrator reads
+
+$$
+r_1\boldsymbol u_{n+1}=r_2\boldsymbol u_n+\widetilde{\boldsymbol f}_n,
+\qquad n=0,\ldots,N_t-1, \tag{4.30}
+$$
+
+where $r_1,r_2$ are matrix polynomials in $\Delta tA$. Stacking all time points gives the all-at-once system
 
 $$
 K\boldsymbol U
-=\left(B\otimes I_x-\Delta t\,\widetilde B\otimes A\right)\boldsymbol U
+=\begin{bmatrix}
+r_1\\-r_2&r_1\\&\ddots&\ddots\\&&-r_2&r_1
+\end{bmatrix}
+\boldsymbol U
 =\boldsymbol b. \tag{4.31}
 $$
 
@@ -266,7 +276,7 @@ With $T=4$, $\Delta T=0.1$, $\Delta x=1/128$, and $J=32$, the iteration counts r
 
 ![Parareal convergence for ADE and Burgers as diffusion weakens](assets/pint/parareal-figure-4-5.svg)
 
-These counts measure convergence toward the sequential fine solution. GPU performance appears in [[en/computational-mathematics/knowledge-notes/time-parallelization/chapter-5-unified-view#gpu-acceleration-and-profiling|Chapter 5]].
+These counts measure convergence toward the sequential fine solution. GPU performance appears in [[en/computational-mathematics/knowledge-notes/time-parallelization/chapter-5-unified-view#site-reproduction-gpu-acceleration-and-profiling|Chapter 5]].
 
 ### MGRiT baseline and Figures 4.9–4.10
 

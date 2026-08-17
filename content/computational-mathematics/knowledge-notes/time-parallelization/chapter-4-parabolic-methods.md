@@ -185,11 +185,21 @@ Figures 4.16–4.17 把方法用于 Burgers 方程。误差因子随 $\alpha$ �
 
 ### 全时间系统与块 Jacobi 平滑
 
-对线性系统 $\boldsymbol u'=A\boldsymbol u+\boldsymbol g$，$\theta$ 方法形成 all-at-once 系统
+对线性系统 $\boldsymbol u'=A\boldsymbol u+\boldsymbol g$，一般单步积分器写成
+
+$$
+r_1\boldsymbol u_{n+1}=r_2\boldsymbol u_n+\widetilde{\boldsymbol f}_n,
+\qquad n=0,\ldots,N_t-1, \tag{4.30}
+$$
+
+其中 $r_1,r_2$ 是 $\Delta tA$ 的矩阵多项式。叠起全部时间点得到 all-at-once 系统
 
 $$
 K\boldsymbol U
-=\left(B\otimes I_x-\Delta t\,\widetilde B\otimes A\right)\boldsymbol U
+=\begin{bmatrix}
+r_1\\-r_2&r_1\\&\ddots&\ddots\\&&-r_2&r_1
+\end{bmatrix}
+\boldsymbol U
 =\boldsymbol b. \tag{4.31}
 $$
 
@@ -281,7 +291,7 @@ Figure 4.22 对 Burgers 方程使用两次块 Jacobi 平滑。扩散充分时非
 
 ![扩散减弱时 ADE 与 Burgers 方程的 Parareal 收敛](assets/pint/parareal-figure-4-5.svg)
 
-这些迭代数衡量向串行细解的收敛。GPU 性能数据见[[computational-mathematics/knowledge-notes/time-parallelization/chapter-5-unified-view#gpu-加速与性能剖析|第五章]]。
+这些迭代数衡量向串行细解的收敛。GPU 性能数据见[[computational-mathematics/knowledge-notes/time-parallelization/chapter-5-unified-view#本站复现gpu-加速与性能剖析|第五章]]。
 
 ### MGRiT 基线与 Figures 4.9–4.10
 
