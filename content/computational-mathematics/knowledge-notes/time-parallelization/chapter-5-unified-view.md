@@ -105,7 +105,14 @@ $M^{-1}$ 是 $A^{-1}$ 的可并行近似。不同算法选择不同的局部性�
 
 ## 本站复现：实验清单
 
-Python 复现项目提供 8 个基线实验和 1 个组合论文验证入口。组合入口生成 6 张论文对应图；第二至第四章共引用 14 组 SVG/PNG 结果及其 JSON 记录。
+Python 复现项目现在提供 `schematics`、`section2`、`section3` 和 `section4` 四个全文分组入口：6 张计算式示意图、39 张数值图和 Tables 3.1–3.2 共 47 项本地计算。早期的 8 个基线实验与 `paper_validation` 组合入口仍保留，适合做快速回归，但不再代表项目的全部覆盖。
+
+| 分组入口     | 覆盖内容                             | 本地计算项 |
+| ------------ | ------------------------------------ | ---------: |
+| `schematics` | Figures 1.1、3.2、3.4、3.7、4.1、4.7 |          6 |
+| `section2`   | Figures 2.1–2.4，共 24 个面板        |          4 |
+| `section3`   | 15 张数值图与 Tables 3.1–3.2         |         17 |
+| `section4`   | Figures 4.2–4.6、4.8–4.22            |         20 |
 
 | Python 输出              | 网页位置         | 机器可读记录                                                 |
 | ------------------------ | ---------------- | ------------------------------------------------------------ |
@@ -126,18 +133,22 @@ Python 复现项目提供 8 个基线实验和 1 个组合论文验证入口。�
 
 跨实验摘要见 [[assets/pint/data/paper_validation_summary.json\|paper_validation_summary.json]]。
 
-上游 MATLAB 仓库还包含直接 ParaDiag、对角化 Parareal、ParaExp、SWR、IDC/PIDC 与波动区域分解脚本。它们已经登记在 Python 项目迁移清单中，当前正式结果尚未逐项覆盖。这里的“完整”指网页引用的所有 Python 产物均有参数、图和 JSON 对应关系，不表示每份上游 MATLAB 脚本已经迁移。
+24 份上游 MATLAB 脚本已经全部移植，原来只有文字描述的实验也按正文重建。完整审计不能省略两个缺口：Figure 3.14 在 $\nu=0.02$ 时的 NKA 曲线未匹配；Table 4.1 属于另一套三维并行代码的历史超算测量，只能引用。详见 [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|ActaPinT-Python 全文实验复现审计]]。
 
 ## 本站复现：正式运行流程
 
 ```bash
 python3.11 -m pip install -e ".[test]"
-actapint all --quick --output-dir results/quick
-OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
-  actapint paper_validation --output-dir results/paper-full
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+actapint schematics --output-dir results/schematics
+actapint section2 --output-dir results/section2
+actapint section3 --output-dir results/section3
+actapint section4 --output-dir results/section4
 ```
 
 2026 年 7 月 31 日的正式运行使用 Python 3.11、NumPy 2.4.6、SciPy 1.17.1 与 Matplotlib 3.11.1。CPU 论文套件墙钟约 4 分 24 秒，峰值常驻内存低于 280 MiB。代码路径包含 CPU 稀疏分解、Krylov 方法和 FFT。
+
+2026 年 8 月 24 日按开放依赖范围重新安装后，104 项测试为 101 通过、1 项 GPU 跳过、2 项数值容差失败；最新公开 CI 也失败。历史正式环境和当前依赖环境应分开报告，不能用旧的绿灯替代依赖锁定。失败详情见全文审计。
 
 每项实验写出：
 
@@ -155,9 +166,9 @@ CuPy 后端把空间算子常驻 GPU，批量构造并求解 40 个独立 Newton
 | T4 双精度测试                     |       CPU |      GPU | 加速比 |
 | --------------------------------- | --------: | -------: | -----: |
 | 40 个 Burgers 细传播子，32 个子步 |  2.893 秒 | 0.246 秒 | 11.76× |
-| 完整论文验证套件                  | 263.57 秒 | 67.92 秒 |  3.88× |
+| `paper_validation` 组合验证套件   | 263.57 秒 | 67.92 秒 |  3.88× |
 
-单批 CPU/GPU 最大绝对差为 $2.33\times10^{-15}$。Figure 4.5 的停止迭代保持 ADE 14/24/35、Burgers 14/21/25。若越过 $10^{-10}$ 目标继续迭代到机器精度，CPU SuperLU 与 GPU batched LU 会因浮点运算顺序不同出现正常舍入差异。
+单批 CPU/GPU 最大绝对差为 $2.33\times10^{-15}$。早期 `paper_validation` 中 Figure 4.5 的停止迭代保持 ADE 14/24/35、Burgers 14/21/25；其 Burgers 通量沿用上游脚本的 $\frac12(u^2)_x$。全文 `section4` 为匹配论文面板使用 $(u^2)_x$，对应计数是 14/24/36，两者不能混用。这里的 3.88× 是早期组合验证入口的加速，不是 Section 2–4 全部 39 张数值图的 GPU 加速。若越过 $10^{-10}$ 目标继续迭代到机器精度，CPU SuperLU 与 GPU batched LU 会因浮点运算顺序不同出现正常舍入差异。
 
 ```bash
 python3.11 -m pip install -e ".[gpu,test]"

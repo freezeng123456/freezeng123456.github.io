@@ -376,7 +376,7 @@ ADE 的 3 次和 13 次与 Figure 3.15(c,d) 一致。波动实验使用论文的
 | ParaDiag-I  | 时间离散、$N_t$、特征向量条件数     | 直接并发规模         | 截断与舍入误差冲突                  |
 | ParaDiag-II | $\alpha$、外层 Krylov、移位求解容差 | 预条件聚集与稳定性   | $\alpha$ 过小放大舍入，过大削弱近似 |
 
-公开的 [ActaPinT-Python](https://github.com/freezeng123456/ActaPinT-Python) 已覆盖 Figure 3.15(a–f) 的 Heat、ADE 和 Wave 实验，并保存 SVG、PNG 与 JSON。上游 MATLAB 仓库还包含 SWR、PIDC/RIDC、ParaExp、直接 ParaDiag 与波动区域分解脚本；当前 Python 正式结果尚未覆盖这些脚本，因此本页不为它们补造数值曲线。
+公开的 [ActaPinT-Python](https://github.com/freezeng123456/ActaPinT-Python) 最新提交已经把 Section 3 的 15 张数值图、3 张计算式示意图和 Tables 3.1–3.2 全部接入独立入口，并保存 SVG、PNG 与 JSON。SWR、PIDC/RIDC、ParaExp、直接 ParaDiag、BVM/NKA、ParaDiag II 与波动区域分解不再只是迁移清单。需要保留的例外是 Figure 3.14：平均 Jacobian 曲线可匹配，$\nu=0.02$ 时论文给出的两条 nearest-Kronecker 加速曲线仍无法由所述权重恢复。逐项证据和当前测试状态见 [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|全文实验复现审计]]。
 
 ## 原文覆盖核对
 

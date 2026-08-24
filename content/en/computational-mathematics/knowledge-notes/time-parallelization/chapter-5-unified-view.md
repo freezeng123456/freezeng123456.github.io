@@ -97,7 +97,14 @@ Each parameter interacts with the physical spectrum, discrete stability function
 
 ## Site reproduction: experiment inventory
 
-The Python reproduction project provides eight baseline experiments and one combined paper-validation entry point. The combined entry point generates six paper-matched plots. Chapters 2–4 reference fourteen SVG/PNG result groups with corresponding JSON records.
+The Python project now provides four whole-article group entries: `schematics`, `section2`, `section3`, and `section4`. Together they run six computed schematics, 39 numerical figures, and Tables 3.1–3.2, for 47 local computations. The earlier eight baselines and combined `paper_validation` entry remain useful regression targets but no longer describe the project's full coverage.
+
+| Group entry  | Coverage                                     | Local computations |
+| ------------ | -------------------------------------------- | -----------------: |
+| `schematics` | Figures 1.1, 3.2, 3.4, 3.7, 4.1, and 4.7     |                  6 |
+| `section2`   | Figures 2.1–2.4, 24 panels                   |                  4 |
+| `section3`   | fifteen numerical figures and Tables 3.1–3.2 |                 17 |
+| `section4`   | Figures 4.2–4.6 and 4.8–4.22                 |                 20 |
 
 | Python output               | Page location                  | Machine-readable record                                      |
 | --------------------------- | ------------------------------ | ------------------------------------------------------------ |
@@ -118,18 +125,22 @@ The Python reproduction project provides eight baseline experiments and one comb
 
 The cross-experiment summary is [[assets/pint/data/paper_validation_summary.json\|paper_validation_summary.json]].
 
-The upstream MATLAB repository also contains direct ParaDiag, diagonalized Parareal, ParaExp, SWR, IDC/PIDC, and wave-domain-decomposition scripts. They are registered in the Python migration inventory but do not yet all have formal Python results. “Complete” here means that every Python artifact cited by the site has a matched parameter record, plot, and JSON file. It does not claim that every upstream MATLAB script has been ported.
+All 24 upstream MATLAB scripts have now been ported, and experiments described only in the paper text have also been reconstructed. Two gaps must remain explicit in any completeness claim: the Figure 3.14 NKA curves at $\nu=0.02$ are unmatched, and Table 4.1 is a historical supercomputer measurement from a different three-dimensional parallel code and can only be quoted. See the [[en/computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|ActaPinT-Python whole-article reproduction audit]].
 
 ## Site reproduction: formal run workflow
 
 ```bash
 python3.11 -m pip install -e ".[test]"
-actapint all --quick --output-dir results/quick
-OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
-  actapint paper_validation --output-dir results/paper-full
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+actapint schematics --output-dir results/schematics
+actapint section2 --output-dir results/section2
+actapint section3 --output-dir results/section3
+actapint section4 --output-dir results/section4
 ```
 
 The formal run on July 31, 2026 used Python 3.11, NumPy 2.4.6, SciPy 1.17.1, and Matplotlib 3.11.1. The CPU paper suite took about 4 minutes 24 seconds wall time and stayed below 280 MiB peak resident memory. The code path includes CPU sparse factorization, Krylov methods, and FFTs.
+
+On August 24, 2026, reinstalling from the open dependency ranges produced 101 passes, one GPU skip, and two numerical-tolerance failures among 104 tests; the latest public CI run also fails. The historical formal environment and the current dependency environment must therefore be reported separately. An old green run cannot replace a dependency lock; the audit gives the two failure details.
 
 Each experiment writes:
 
@@ -147,9 +158,9 @@ The CuPy backend keeps spatial operators resident on the GPU and assembles and s
 | T4 double-precision test                 |      CPU |     GPU | Speedup |
 | ---------------------------------------- | -------: | ------: | ------: |
 | 40 Burgers fine propagators, 32 substeps |  2.893 s | 0.246 s |  11.76× |
-| complete paper-validation suite          | 263.57 s | 67.92 s |   3.88× |
+| combined `paper_validation` suite        | 263.57 s | 67.92 s |   3.88× |
 
-The maximum absolute CPU/GPU difference for one batch is $2.33\times10^{-15}$. Figure 4.5 retains stopping iterations ADE 14/24/35 and Burgers 14/21/25. Continuing beyond the $10^{-10}$ target toward machine precision produces normal rounding differences between CPU SuperLU and GPU batched LU because their floating-point operation orders differ.
+The maximum absolute CPU/GPU difference for one batch is $2.33\times10^{-15}$. In the earlier `paper_validation` entry, Figure 4.5 retains stopping iterations ADE 14/24/35 and Burgers 14/21/25; its Burgers run follows the upstream-script $\frac12(u^2)_x$. The whole-article `section4` entry uses $(u^2)_x$ to match the paper panel and gives 14/24/36, so the two must not be conflated. The 3.88× value belongs to the earlier combined validation entry, not to all 39 numerical figures in Sections 2–4. Continuing beyond the $10^{-10}$ target toward machine precision produces normal rounding differences between CPU SuperLU and GPU batched LU because their floating-point operation orders differ.
 
 ```bash
 python3.11 -m pip install -e ".[gpu,test]"

@@ -367,7 +367,7 @@ The 3- and 13-update ADE results match Figures 3.15(c,d). The wave run uses the 
 | ParaDiag-I  | time discretization, $N_t$, eigenvector conditioning   | direct concurrency                          | conflict between truncation and roundoff                                |
 | ParaDiag-II | $\alpha$, outer Krylov method, shifted-solve tolerance | clustering and stability                    | small $\alpha$ amplifies roundoff; large $\alpha$ weakens approximation |
 
-The public [ActaPinT-Python](https://github.com/freezeng123456/ActaPinT-Python) project covers the Heat, ADE, and Wave experiments in Figures 3.15(a–f), with SVG, PNG, and JSON outputs. The upstream MATLAB repository also contains SWR, PIDC/RIDC, ParaExp, direct ParaDiag, and wave-domain-decomposition scripts. Those scripts do not yet have formal Python results, so this page does not invent replacement curves for them.
+The latest public [ActaPinT-Python](https://github.com/freezeng123456/ActaPinT-Python) commit now gives independent entries, SVG/PNG figures, and JSON metrics for all fifteen numerical figures, three computed schematics, and Tables 3.1–3.2 in Section 3. SWR, PIDC/RIDC, ParaExp, direct ParaDiag, BVM/NKA, ParaDiag II, and wave-domain decomposition are no longer migration-list placeholders. One exception remains: the average-Jacobian curves of Figure 3.14 match, but the two published nearest-Kronecker speed-up curves at $\nu=0.02$ cannot be recovered from the documented weights. See the [[en/computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|whole-article reproduction audit]] for itemized evidence and current test health.
 
 ## Source coverage audit
 

@@ -33,6 +33,9 @@ These notes follow M. J. Gander, S.-L. Wu, and T. Zhou, _Time Parallelization fo
 | Sections 4.1–4.6       | Chapter 4       | **Paragraph-level complete**: four close-reading pages cover (4.1)–(4.44), Theorems 4.1–4.9, Figures 4.1–4.22, and Table 4.1                                 |
 | Section 5              | Chapter 5       | **Paragraph-level complete**: paper conclusions are covered; unified analysis, GPU work, and the experiment ledger are explicitly marked as site supplements |
 
+> [!warning] Implementation coverage is not exception-free reproduction
+> The [[en/computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|whole-article experiment audit]] of August 24, 2026 confirms generators or computed redraws for all 45 numbered figures and local computations for two of the three tables. The two Figure 3.14 NKA curves remain unmatched, Table 4.1 is an external supercomputer result that is only quoted, and a current clean installation exposes two numerical-tolerance failures. “Paragraph-level complete” describes the site's coverage of the source text; it must not be read as exception-free numerical and engineering reproduction.
+
 ## Method map
 
 | Method    | Parallel unit                             | Mechanism                              | Natural regime                 |
@@ -68,7 +71,9 @@ $$
 where $K$ is the iteration count, $C_G$ and $C_F$ are the coarse and fine propagation costs, and $P$ is the temporal concurrency. The numerical experiments in these notes measure convergence, not end-to-end parallel speedup.
 
 > [!note] Numerical provenance
-> Original paper figures on these pages are extracted from the source PDF with their coordinates and panels intact. Experiments labeled “site reproduction” were regenerated on 31 July 2026 from the Python project on the new experiment server. The initial formal results used the SciPy CPU path. A subsequent CuPy/T4 hybrid backend batches the independent Burgers fine propagators on the GPU, preserves the Figure 4.5 stopping iterations, and reduces the complete paper suite from 263.57 to 67.92 seconds.
+> Original paper figures on these pages are extracted from the source PDF with their coordinates and panels intact. Experiments labeled “site reproduction” were regenerated on 31 July 2026 from the Python project on the new experiment server. The initial formal results used the SciPy CPU path. A subsequent CuPy/T4 hybrid backend batches the independent Burgers fine propagators on the GPU, preserves the Figure 4.5 stopping iterations within the earlier `paper_validation` entry, and reduces that combined suite from 263.57 to 67.92 seconds. Its Burgers flux differs from the current whole-article `section4` entry, and the timing is not the total wall time of all four whole-article groups.
+>
+> These T4 values are the archived single-GPU record from July 31, 2026. Its scope and the current dependency drift are documented in the [[en/computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|reproduction audit]].
 
 ## Primary sources
 
