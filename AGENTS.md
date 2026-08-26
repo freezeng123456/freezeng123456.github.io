@@ -48,3 +48,12 @@ Before publishing a diagram change:
 4. Confirm that Quartz renders SVGs as responsive `<img>` elements, not `<object>` elements.
 5. Check both language versions in a real browser for loading failures, clipped labels, overlap, and horizontal overflow.
 6. After deployment, verify that every affected page and SVG asset returns HTTP 200.
+
+## Cursor Cloud specific instructions
+
+This repo is a Quartz v5 static-site generator (no backend/database). Standard commands live in `README.md` and `package.json` scripts; use those. Notes below are only the non-obvious gotchas.
+
+- Node is pinned to `v22.16.0` (`.node-version`) and provided via nvm's `default` alias; login shells pick it up automatically. If a non-login shell resolves a different `node`, run `source ~/.nvm/nvm.sh && nvm use default` first.
+- `npx quartz plugin install` (and the `prebuild`/`install-plugins` hook) is a no-op here: it prints `⚠ No quartz.lock.json found` and is NOT required. All plugins are regular npm `@quartz-community/*` dependencies, so `npm ci` is sufficient and `npx quartz build` works directly.
+- Run/preview the site with `npx quartz build --serve` (HTTP on port `8080`, WebSocket hot-reload on `3001`). `--serve` auto-enables `--watch`, so edits under `content/` trigger an incremental rebuild automatically — no restart needed.
+- A brand-new `content/*.md` file logs `isn't yet tracked by git, dates will be inaccurate` until committed; this is expected and harmless.
