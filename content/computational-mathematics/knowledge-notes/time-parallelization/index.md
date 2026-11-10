@@ -34,7 +34,7 @@ tags:
 | Section 5          | 第五章   | **段落级完成**：覆盖论文结论，并将统一视角、GPU 分析和实验清单明确标为本站补充               |
 
 > [!info] 实验复现进展
-> [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-progress-2026-11-10|2026-11-10 复现进展]]新增 Table 4.1 对应的三维 P1 有限元 / dG(3) 数值基线：原文空间规模下，2/4/8 个时间步均为 7 次迭代；本机测试为 113 通过、1 个 CUDA 跳过。Figure 3.14 的 NKA 曲线已增加独立求解对照，仍需原始运行设置解释差异。历史扩展性计时和三组归一化、舍入差异保留在 [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|2026-08-24 审计]] 中
+> [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-progress-2026-11-11|2026-11-11 复现进展]]完成 NKA 同初值重建与两节点 MPI 强弱扩展实验：1–16 进程均保持 7 次迭代，512 时间片的 16 进程强扩展加速为 15.35 倍；本机测试 116 通过、1 个 CUDA 跳过。Figure 3.14 的大幅加速仍未由公开设置恢复。前一日的三维离散基线见 [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-progress-2026-11-10|2026-11-10 记录]]，历史归一化与舍入比较见 [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|2026-08-24 审计]]
 
 ## 方法图谱
 
@@ -68,7 +68,7 @@ T_{\mathrm{parallel}}
 \approx K(C_G+C_F/P)+C_{\mathrm{comm}}+C_{\mathrm{setup}},
 $$
 
-其中 $K$ 是迭代次数，$C_G$ 和 $C_F$ 分别是粗、细传播成本，$P$ 是时间并发度。本专题的数值实验测量算法收敛性，不测量端到端并行加速比。
+其中 $K$ 是迭代次数，$C_G$ 和 $C_F$ 分别是粗、细传播成本，$P$ 是时间并发度。早期分章实验测量收敛性；2026-11-11 的 MPI 扩展实验进一步记录包含通信的求解墙钟时间，并将 setup 单独列出。
 
 > [!note] 数值来源
 > 页面中的原论文图表直接取自论文 PDF，并保留原坐标与面板。标为“本站复现”的实验于 2026 年 7 月 31 日在新的实验服务器上由 Python 项目重新生成。初始正式结果使用 SciPy CPU 路径；随后加入 CuPy/T4 混合后端，将独立 Burgers 细传播批量放到 GPU。早期 `paper_validation` 内 Figure 4.5 的停止迭代保持一致，组合验证套件由 263.57 秒降至 67.92 秒；它使用的 Burgers 通量和当前全文 `section4` 入口不同，也不是四个全文分组的总墙钟。

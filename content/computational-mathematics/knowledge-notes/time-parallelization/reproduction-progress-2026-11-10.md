@@ -12,6 +12,8 @@ tags:
 
 代码与原始结果位于 [ActaPinT-Python 草稿 PR #1](https://github.com/freezeng123456/ActaPinT-Python/pull/1)，对应[提交 24b6cc5](https://github.com/freezeng123456/ActaPinT-Python/commit/24b6cc5bb9851b26480c48bbd0b8f1f8e5a091bb)；算法配置、对照图和运行命令见[完整报告](https://github.com/freezeng123456/ActaPinT-Python/blob/24b6cc5bb9851b26480c48bbd0b8f1f8e5a091bb/docs/REPRODUCTION_CHECKS_2026-11-10.md)
 
+> 后续更新：[[computational-mathematics/knowledge-notes/time-parallelization/reproduction-progress-2026-11-11|2026-11-11 已完成 NKA 从头重建与两节点扩展实验]]，本页保留前一日的基线记录
+
 ## 三维 STMG 已形成可运行基线
 
 Acta Table 4.1 引自 Gander–Neumüller (2016) 的 Example 6.1。本次按其离散方式实现单位立方体上的 P1 四面体有限元和时间 dG(3)，时间步长为 0.1。12 个初始四面体经四次均匀细化，得到 49,152 个单元、7,471 个内部顶点；每个时间片有 4 个时间系数

@@ -9,9 +9,6 @@ tags:
   - 数值实验
 ---
 
-> [!info] 后续更新
-> [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-progress-2026-11-10|2026-11-10 复现进展]]已补入原文规模的三维 STMG 数值基线，并修复两个测试，本机完整测试为 113 通过、1 个 CUDA 跳过。本文保留 2026-08-24 的历史结果；新实现和当前差异见更新页及[代码草稿 PR](https://github.com/freezeng123456/ActaPinT-Python/pull/1)
-
 本页审计 [ActaPinT-Python](https://github.com/freezeng123456/ActaPinT-Python) 的提交
 [`9bf1293`](https://github.com/freezeng123456/ActaPinT-Python/commit/9bf12930a5fbd0403abf8a436c511a90de4025fd)，对应论文 M. J. Gander、S.-L. Wu 与 T. Zhou，_Time Parallelization for Hyperbolic and Parabolic Problems_，以及固定在上游提交 `68431b7` 的 24 份 MATLAB 脚本。审计把“有入口”“能够运行”“与论文数值吻合”和“具备并行性能证据”分开判断。
 
@@ -144,4 +141,3 @@ Figure 4.10 从论文数字化得到的 124 个误差标记整体在 6% 内匹�
 - [Python 复现仓库](https://github.com/freezeng123456/ActaPinT-Python)
 - [全文复现索引](https://github.com/freezeng123456/ActaPinT-Python/blob/main/docs/PAPER_REPRODUCTION.md)
 - [逐项结果说明](https://github.com/freezeng123456/ActaPinT-Python/blob/main/docs/RESULTS.md)
-
