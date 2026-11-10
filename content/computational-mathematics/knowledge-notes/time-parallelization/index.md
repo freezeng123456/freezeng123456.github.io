@@ -33,8 +33,8 @@ tags:
 | Sections 4.1–4.6   | 第四章   | **段落级完成**：四组精读页覆盖 (4.1)–(4.44)、Theorems 4.1–4.9、Figures 4.1–4.22 和 Table 4.1 |
 | Section 5          | 第五章   | **段落级完成**：覆盖论文结论，并将统一视角、GPU 分析和实验清单明确标为本站补充               |
 
-> [!warning] 实现覆盖不等于无例外复现
-> 2026-08-24 的 [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|全文实验复现审计]]确认：45 张编号图全部已有生成器或计算式重绘，3 张表中 2 张可本地计算；但 Figure 3.14 的两条 NKA 曲线仍未匹配，Table 4.1 只是引用的外部超算结果，而且当前开放依赖安装有两个数值容差测试失败。专题的“段落级完成”描述网页对论文内容的覆盖，不应误读为每项数值和工程环境都已无差异复现。
+> [!info] 实验复现进展
+> [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-progress-2026-11-10|2026-11-10 复现进展]]新增 Table 4.1 对应的三维 P1 有限元 / dG(3) 数值基线：原文空间规模下，2/4/8 个时间步均为 7 次迭代；本机测试为 113 通过、1 个 CUDA 跳过。Figure 3.14 的 NKA 曲线已增加独立求解对照，仍需原始运行设置解释差异。历史扩展性计时和三组归一化、舍入差异保留在 [[computational-mathematics/knowledge-notes/time-parallelization/reproduction-audit-2026-08-24|2026-08-24 审计]] 中
 
 ## 方法图谱
 
@@ -80,3 +80,4 @@ $$
 - M. J. Gander, S.-L. Wu, and T. Zhou, [_Time Parallelization for Hyperbolic and Parabolic Problems_](https://doi.org/10.1017/S0962492924000072), Acta Numerica 34 (2025), pp. 385-489.
 - 原始 MATLAB 算例：[wushulin/ActaPinT](https://github.com/wushulin/ActaPinT)。
 - Python 转换、扩充与正式结果：[freezeng123456/ActaPinT-Python](https://github.com/freezeng123456/ActaPinT-Python)。
+
